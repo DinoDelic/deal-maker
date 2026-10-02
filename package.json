@@ -1,0 +1,23 @@
+{
+  "name": "deal-maker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "iPhone-Deal-Scanner: findet gute iPhone-Angebote auf eBay.de und meldet sie per Telegram (nur scannen, nicht kaufen).",
+  "type": "module",
+  "scripts": {
+    "scan:once": "tsx src/cli/scan.ts",
+    "scan:loop": "tsx src/cli/scan.ts --loop",
+    "check": "tsx src/cli/check.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}
