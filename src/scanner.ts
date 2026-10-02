@@ -53,6 +53,8 @@ export function observe(l: ExternalListing, store: Store, cfg: ScannerConfig, no
 
 export class Scanner {
   private detailCache = new Map<string, ExternalListing>();
+  /** Last logged tier and price per listing, so the log only grows when something changes. */
+  private lastLogged = new Map<string, string>();
 
   constructor(private readonly deps: ScannerDeps) {}
 
@@ -94,16 +96,23 @@ export class Scanner {
       }
 
       stats.byTier[decision.tier] = (stats.byTier[decision.tier] ?? 0) + 1;
-      if (decision.tier !== 'SKIPPED') this.log(listing, decision, now);
 
+      let alerted = false;
       if (ALERT_TIERS.has(decision.tier) && listing.detailed && this.shouldAlert(listing)) {
         await this.deps.notifier.send(formatAlert(listing, decision, now));
         store.markAlerted(listing.externalId, listing.priceCents);
         stats.alerts++;
+        alerted = true;
+      }
+      const signature = `${decision.tier}:${listing.priceCents}`;
+      if (decision.tier !== 'SKIPPED' && (alerted || this.lastLogged.get(listing.externalId) !== signature)) {
+        this.log(listing, decision, now, alerted);
+        this.lastLogged.set(listing.externalId, signature);
       }
     }
 
     if (this.detailCache.size > 5000) this.detailCache.clear();
+    if (this.lastLogged.size > 20000) this.lastLogged.clear();
     store.flush();
     return stats;
   }
@@ -114,7 +123,7 @@ export class Scanner {
     return last === null || l.priceCents < last;
   }
 
-  private log(l: ExternalListing, d: Decision, now: Date): void {
+  private log(l: ExternalListing, d: Decision, now: Date, alerted: boolean): void {
     this.deps.store.logDecision({
       at: now.toISOString(),
       id: l.externalId,
@@ -132,6 +141,7 @@ export class Scanner {
       seller: l.seller,
       reasons: d.reasons,
       warnings: d.warnings,
+      alerted,
     });
   }
 }

@@ -35,6 +35,13 @@ Im Probebetrieb (`DRY_RUN=1`) landen alle Entscheidungen in `data/state/decision
 
 Später auf einen Server umziehen geht mit denselben Befehlen: Code dort holen, `.env` und den Ordner `data/` mitnehmen (darin stecken die gesammelten Marktpreise), fertig.
 
+## Dashboard
+```bash
+npm run dashboard              # zeigt, was der Scanner gefunden hat
+npm run dashboard -- --demo    # Beispieldaten (frei erfunden), zum Anschauen vor dem ersten Scan
+```
+Dann im Browser http://localhost:3000 öffnen. Drei Ansichten: gefundene Deals, blockierte Deals mit Grund, gesammelte Marktpreise je Variante. Die Seite aktualisiert sich jede Minute. Für das echte Dashboard muss der Scanner parallel in einem zweiten Fenster laufen.
+
 ## Schnell-Check (Kleinanzeigen und alles andere)
 ```bash
 npm run check -- --title "iPhone 15 Pro 256GB" --text "Akku 89 %, keine Kratzer" --price 495 --ship 6

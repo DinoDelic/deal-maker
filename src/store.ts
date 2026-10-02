@@ -62,6 +62,11 @@ export class JsonFileStore implements Store {
     return Object.values(this.state.auctions[key] ?? {}).map((o) => ({ priceCents: o.p, observedAt: new Date(o.t) }));
   }
 
+  /** All variant/grade keys with observations (for the dashboard). */
+  marketKeys(): string[] {
+    return [...new Set([...Object.keys(this.state.active), ...Object.keys(this.state.auctions)])].sort();
+  }
+
   alertedPrice(itemId: string): Cents | null {
     return this.state.alerted[itemId] ?? null;
   }

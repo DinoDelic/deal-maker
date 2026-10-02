@@ -10,7 +10,8 @@
     "check": "tsx src/cli/check.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "telegram:setup": "tsx src/cli/telegram-setup.ts"
+    "telegram:setup": "tsx src/cli/telegram-setup.ts",
+    "dashboard": "tsx src/cli/dashboard.ts"
   },
   "engines": {
     "node": ">=20"
