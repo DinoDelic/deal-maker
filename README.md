@@ -26,7 +26,7 @@ Im Probebetrieb (`DRY_RUN=1`) landen alle Entscheidungen in `data/state/decision
 
 ## Auf dem eigenen Rechner laufen lassen
 1. **Node.js 22 (LTS)** installieren: https://nodejs.org (Windows/Mac-Installer, einfach durchklicken).
-2. Code holen: `git clone https://github.com/<dein-name>/deal-maker.git` (oder auf GitHub „Code → Download ZIP“) und im Ordner ein Terminal öffnen.
+2. Code holen: `git clone https://github.com/DinoDelic/deal-maker.git` (oder auf GitHub „Code → Download ZIP“) und im Ordner ein Terminal öffnen.
 3. `npm install`
 4. `.env.example` nach `.env` kopieren und Zugänge eintragen (eBay, Telegram). Zuerst `DRY_RUN=1` lassen.
 5. `npm run scan:loop` starten. Das Fenster offen lassen.
