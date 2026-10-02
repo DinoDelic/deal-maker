@@ -29,6 +29,7 @@ Im Probebetrieb (`DRY_RUN=1`) landen alle Entscheidungen in `data/state/decision
 2. Code holen: `git clone https://github.com/DinoDelic/deal-maker.git` (oder auf GitHub „Code → Download ZIP“) und im Ordner ein Terminal öffnen.
 3. `npm install`
 4. `.env.example` nach `.env` kopieren und Zugänge eintragen (eBay, Telegram). Zuerst `DRY_RUN=1` lassen.
+   Telegram-Chat-ID: Bot-Token in `.env` eintragen, dem Bot in Telegram `/start` schicken, dann `npm run telegram:setup`. Der Befehl schickt eine Testnachricht und zeigt die Zeile `TELEGRAM_CHAT_ID=...` für die `.env`.
 5. `npm run scan:loop` starten. Das Fenster offen lassen.
 6. Energiesparen so einstellen, dass der Rechner nicht in den Ruhezustand geht, solange der Scanner laufen soll.
 
