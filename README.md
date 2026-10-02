@@ -24,6 +24,16 @@ npm run scan:loop         # Dauerbetrieb alle SCAN_INTERVAL_SECONDS
 ```
 Im Probebetrieb (`DRY_RUN=1`) landen alle Entscheidungen in `data/state/decisions.jsonl`. Erst mit `DRY_RUN=0` gehen Nachrichten an Telegram.
 
+## Auf dem eigenen Rechner laufen lassen
+1. **Node.js 22 (LTS)** installieren: https://nodejs.org (Windows/Mac-Installer, einfach durchklicken).
+2. Code holen: `git clone https://github.com/<dein-name>/deal-maker.git` (oder auf GitHub „Code → Download ZIP“) und im Ordner ein Terminal öffnen.
+3. `npm install`
+4. `.env.example` nach `.env` kopieren und Zugänge eintragen (eBay, Telegram). Zuerst `DRY_RUN=1` lassen.
+5. `npm run scan:loop` starten. Das Fenster offen lassen.
+6. Energiesparen so einstellen, dass der Rechner nicht in den Ruhezustand geht, solange der Scanner laufen soll.
+
+Später auf einen Server umziehen geht mit denselben Befehlen: Code dort holen, `.env` und den Ordner `data/` mitnehmen (darin stecken die gesammelten Marktpreise), fertig.
+
 ## Schnell-Check (Kleinanzeigen und alles andere)
 ```bash
 npm run check -- --title "iPhone 15 Pro 256GB" --text "Akku 89 %, keine Kratzer" --price 495 --ship 6
@@ -34,5 +44,5 @@ Es wird nichts abgerufen. Du gibst ein, was du siehst.
 ## Noch offen
 - Ankaufpreise in `data/reference-prices.csv` eintragen
 - Kategorie-ID 9355 („Handys & Smartphones“) mit dem ersten echten Abruf auf EBAY_DE prüfen
-- Ort für den Dauerbetrieb festlegen (kleiner Server); danach PostgreSQL statt JSON-Datei und Telegram-Feedback-Buttons auswerten
+- Vorerst läuft der Scanner auf dem eigenen Rechner; bei Erfolg Umzug auf einen kleinen Server, dann PostgreSQL statt JSON-Datei und Telegram-Feedback-Buttons auswerten
 - eBay-API-Lizenzbedingungen zur Speicherung von Angebotsdaten prüfen
