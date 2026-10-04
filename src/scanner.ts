@@ -138,7 +138,8 @@ export class Scanner {
       profit: d.profitCents,
       offer: d.suggestedOfferCents,
       trust: d.trust?.level ?? null,
-      seller: l.seller,
+      // No username: we keep no eBay user data (Marketplace Account Deletion opt-out).
+      seller: { feedbackScore: l.seller.feedbackScore, feedbackPercent: l.seller.feedbackPercent, accountType: l.seller.accountType },
       reasons: d.reasons,
       warnings: d.warnings,
       alerted,
