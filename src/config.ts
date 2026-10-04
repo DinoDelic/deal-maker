@@ -19,6 +19,8 @@ export interface ScannerConfig {
   outboundShippingCents: Cents;
   /** Listings cheaper than this share of market value are treated as bait. */
   baitPriceRatio: number;
+  /** Cost below this share of market value gets a warning to double-check comps. */
+  suspiciousPriceRatio: number;
   /** Best offer: only suggest offers down to this share of the asking price. */
   maxOfferDiscountRatio: number;
   /** Only evaluate auctions that end within this many minutes. */
@@ -52,6 +54,7 @@ export const DEFAULT_CONFIG: ScannerConfig = {
   resaleFeeRatio: 0,
   outboundShippingCents: 6_00,
   baitPriceRatio: 0.4,
+  suspiciousPriceRatio: 0.65,
   maxOfferDiscountRatio: 0.2,
   auctionWindowMinutes: 15,
   auctionCloseCaptureMinutes: 3,
@@ -65,7 +68,7 @@ export const DEFAULT_CONFIG: ScannerConfig = {
   market: {
     activeWindowDays: 14,
     auctionWindowDays: 30,
-    minActiveComps: 5,
+    minActiveComps: 10,
     minAuctionComps: 3,
     activePercentile: 0.25,
   },

@@ -29,6 +29,9 @@ export interface ScannerDeps {
 
 const ALERT_TIERS = new Set(['SAFE', 'GOOD', 'OFFER']);
 
+/** eBay refurbished condition ids: retail prices with warranty, not what we can resell for privately. */
+const REFURBISHED_CONDITION_IDS = new Set([2000, 2010, 2020, 2030, 2500]);
+
 function isAuctionOnly(l: ExternalListing): boolean {
   return l.buyingOptions.includes('AUCTION') && !l.buyingOptions.includes('FIXED_PRICE');
 }
@@ -36,6 +39,8 @@ function isAuctionOnly(l: ExternalListing): boolean {
 /** Feeds our own market data: active Buy-It-Now prices and auction prices shortly before the end. */
 export function observe(l: ExternalListing, store: Store, cfg: ScannerConfig, now: Date): void {
   if (l.country && l.country !== 'DE') return;
+  if (l.conditionId !== null && REFURBISHED_CONDITION_IDS.has(l.conditionId)) return;
+  if (l.seller.accountType === 'BUSINESS') return;
   const parsed = parseListing(l);
   if (!parsed.variant || parsed.grade === 'PARTS' || parsed.storageAssumed) return;
   if (hardExclusions(l.title, l.text).length) return;

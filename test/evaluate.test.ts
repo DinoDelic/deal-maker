@@ -105,7 +105,7 @@ describe('valuation helpers', () => {
   it('market = lowest of manual, active P25 and auction median', () => {
     const obs = (p: number[]) => p.map((priceCents) => ({ priceCents, observedAt: NOW }));
     const m = estimateMarket(
-      { manualCents: 700_00, activePrices: obs([600_00, 650_00, 700_00, 720_00, 800_00]), auctionCloses: obs([620_00, 630_00, 640_00]) },
+      { manualCents: 700_00, activePrices: obs([600_00, 610_00, 650_00, 660_00, 700_00, 710_00, 720_00, 750_00, 780_00, 800_00]), auctionCloses: obs([620_00, 630_00, 640_00]) },
       NOW,
       DEFAULT_CONFIG.market,
     );

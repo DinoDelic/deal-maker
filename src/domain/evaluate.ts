@@ -172,6 +172,9 @@ export function evaluate(
   }
   if (parsed.noBox) warnings.push('Keine OVP');
   if (isAuction) warnings.push('Auktion: Preis ist aktuelles Gebot');
+  if (resaleCents !== null && costCents < resaleCents * cfg.suspiciousPriceRatio) {
+    warnings.push('Preis weit unter Marktwert: Vergleichspreise und Angebot genau prüfen');
+  }
 
   if (reasons.length) {
     result.tier = 'BLOCKED';

@@ -42,8 +42,16 @@ export function loadReferenceCsv(path: string): ReferenceRow[] {
   return parseReferenceCsv(readFileSync(path, 'utf8'));
 }
 
+/**
+ * Market bucket: NEW on its own, every used grade together. Summaries carry no description, so
+ * a finer grade split would compare a described private phone against title-only comps.
+ */
+export function marketBucket(grade: Grade): 'NEW' | 'USED' {
+  return grade === 'NEW' ? 'NEW' : 'USED';
+}
+
 export function marketKey(variant: Variant, grade: Grade): string {
-  return `${variantKey(variant)}/${grade}`;
+  return `${variantKey(variant)}/${marketBucket(grade)}`;
 }
 
 /** Combines the manual table with the store's own observations. */

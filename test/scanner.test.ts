@@ -87,3 +87,21 @@ describe('formatAlert', () => {
     expect(msg.replyMarkup.inline_keyboard[0]![0]!.url).toBe(l.url);
   });
 });
+
+describe('market observations', () => {
+  it('pools all used grades and ignores refurbished and business listings', async () => {
+    const { observe } = await import('../src/scanner.js');
+    const store = memoryStore();
+    observe(listing({ externalId: 'a', title: 'iPhone 15 Pro 256GB wie neu' }), store, DEFAULT_CONFIG, NOW);
+    observe(listing({ externalId: 'b', title: 'iPhone 15 Pro 256GB' }), store, DEFAULT_CONFIG, NOW);
+    observe(listing({ externalId: 'c', conditionId: 2020 }), store, DEFAULT_CONFIG, NOW);
+    observe(
+      listing({ externalId: 'd', seller: { username: 'shop', feedbackScore: 9000, feedbackPercent: 99.9, accountType: 'BUSINESS' } }),
+      store,
+      DEFAULT_CONFIG,
+      NOW,
+    );
+    expect(store.marketKeys()).toEqual(['15-pro/256/USED']);
+    expect(store.activePrices('15-pro/256/USED').map((o) => o.priceCents).sort()).toEqual([606_00, 606_00]);
+  });
+});
